@@ -1,12 +1,12 @@
 const express = require("express");
 // const bodyParser = require("body-parser");
-const usersRouter = require("./routers/users");
+const promoRouter = require("./routes/routes");
 
 const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
-app.use("/users", usersRouter);
+app.use("/promo", promoRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to our server!");
