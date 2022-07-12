@@ -1,21 +1,23 @@
 const mysql = require("mysql");
-const pool = require("../sql/connection");
-const { handleSQLError } = require("../sql/error");
+const pool = require("../sql/connections");
+const { handleSQLError } = require("../sql/errors");
 
-const getAllUsers = (req, res) => {
+const getAll = (req, res) => {
   // SELECT ALL USERS
-  pool.query("SELECT * FROM users", (err, rows) => {
+  pool.query("SELECT * FROM company", (err, rows) => {
     if (err) return handleSQLError(res, err);
     return res.json(rows);
   });
 };
 
-const getUserById = (req, res) => {
+const getByCompanyName = (req, res) => {
   // SELECT USERS WHERE ID = <REQ PARAMS ID>
-  let id = req.params.id;
+  console.log(req.params);
+
+  let name = req.params.company_name;
   let sql = "SELECT * FROM ?? WHERE ?? = ?";
   // WHAT GOES IN THE BRACKETS
-  sql = mysql.format(sql, ["users", "id", id]);
+  sql = mysql.format(sql, ["company", "company_name", name]);
 
   pool.query(sql, (err, rows) => {
     if (err) return handleSQLError(res, err);
@@ -63,8 +65,8 @@ const deleteUserByFirstName = (req, res) => {
 };
 
 module.exports = {
-  getAllUsers,
-  getUserById,
+  getAll,
+  getByCompanyName,
   createUser,
   updateUserById,
   deleteUserByFirstName,
