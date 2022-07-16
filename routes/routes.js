@@ -4,12 +4,12 @@ const router = express.Router();
 
 router.get("/", promoController.getAll);
 
-router.get("/:company_name", promoController.getByCompanyName);
+router.get("/:id", promoController.getByCompanyId);
 
 router.post("/", promoController.createUser);
 
 router.put("/:id", promoController.updateUserById);
 
-router.delete("/:first_name", promoController.deleteUserByFirstName);
+router.delete("/:first_name", promoController.deleteByCompanyname);
 
 module.exports = router;
