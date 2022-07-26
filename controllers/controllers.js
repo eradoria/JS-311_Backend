@@ -10,20 +10,35 @@ const getAll = (req, res) => {
   });
 };
 
-const getByCompanyId = (req, res) => {
-  // SELECT USERS WHERE ID = <REQ PARAMS ID>
-  console.log(req.params);
+// const getByCompanyId = (req, res) => {
+//   // SELECT USERS WHERE ID = <REQ PARAMS ID>
+//   console.log(req.params);
 
-  let id  = req.params.id;
-  let sql = "SELECT * FROM ?? WHERE ?? = ?";
-  // WHAT GOES IN THE BRACKETS
-  sql = mysql.format(sql, ["company", "id", id]);
+//   let id  = req.params.id;
+//   let sql = "SELECT * FROM ?? WHERE ?? = ?";
+//   // WHAT GOES IN THE BRACKETS
+//   sql = mysql.format(sql, ["company", "id", id]);
 
-  pool.query(sql, (err,rows) => {
-    if (err) return handleSQLError(res, err);
-    return res.json(rows);
-  });
-};
+//   pool.query(sql, (err,rows) => {
+//     if (err) return handleSQLError(res, err);
+//     return res.json(rows);
+//   });
+// };
+
+const getByCompany = (req, res) => {
+    // SELECT USERS WHERE ID = <REQ PARAMS ID>
+    console.log(req.params);
+  
+    let company  = req.params.company_name;
+    let sql = "SELECT * FROM ?? WHERE ?? = ?";
+    // WHAT GOES IN THE BRACKETS
+    sql = mysql.format(sql, ["company", "company_name", company]);
+  
+    pool.query(sql, (err,rows) => {
+      if (err) return handleSQLError(res, err);
+      return res.json(rows);
+    });
+  };
 
 const createUser = (req, res) => {
   // INSERT INTO USERS FIRST AND LAST NAME
@@ -67,7 +82,7 @@ const deleteByCompanyname = (req, res) => {
 
 module.exports = {
   getAll,
-  getByCompanyId,
+  getByCompany,
   createUser,
   updateUserById,
   deleteByCompanyname,
