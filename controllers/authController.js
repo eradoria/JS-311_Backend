@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 const pool = require("../sql/connections");
 const { handleSQLError } = require("../sql/errors");
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const authlogin = (req, res) => {
@@ -13,7 +13,7 @@ const authlogin = (req, res) => {
   sql = mysql.format(sql, [email]);
   pool.query(sql, (err, results) => {
     if (err) return handleSQLError(res, err);
-    bcrypt.compare(password, results[0].password, function (err, result) {
+    bcryptjs.compare(password, results[0].password, function (err, result) {
       // result == true
       console.log(result);
       if (err) {
@@ -31,7 +31,7 @@ const authlogin = (req, res) => {
     });
   });
 
-  //   bcrypt.hash(password, 10, function (err, hash) {
+  //   bcryptjs.hash(password, 10, function (err, hash) {
   //     // Store hash in your password DB.
   //     if (err) {
   //       return res.status(500).json(err);
@@ -46,7 +46,7 @@ const authsignup = (req, res) => {
   const { email, password } = req.body;
   let sql = "INSERT INTO user_creds (email, password) VALUES (?, ?)";
   // WHAT GOES IN THE BRACKETS
-  bcrypt.hash(password, 10, function (err, hash) {
+  bcryptjs.hash(password, 10, function (err, hash) {
     // Store hash in your password DB.
     if (err) {
       return res.status(500).json(err);
