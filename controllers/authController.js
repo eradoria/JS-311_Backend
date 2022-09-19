@@ -25,19 +25,15 @@ const authlogin = (req, res) => {
           { user_id: results[0].user_id },
           process.env.JWT_SECRET
         );
+        res.cookie("Bearer", token, { maxAge: 900000 });
+        res.header("Authorization", `Bearer ${token}`).send({
+          signedToken,
+        });
 
         return res.status(200).json(token);
       }
     });
   });
-
-  //   bcryptjs.hash(password, 10, function (err, hash) {
-  //     // Store hash in your password DB.
-  //     if (err) {
-  //       return res.status(500).json(err);
-  //     } else {
-  //     }
-  //   });
 };
 
 const authsignup = (req, res) => {
