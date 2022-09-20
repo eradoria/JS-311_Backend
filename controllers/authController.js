@@ -18,6 +18,7 @@ const authlogin = (req, res) => {
       console.log(result);
       if (err) {
         return res.status(500).json(err);
+        console.log('failed to pull users')
       } else if (!result) {
         return res.status(401).json({ MSG: "User or Password is Incorrect" });
       } else {
