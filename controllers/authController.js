@@ -23,14 +23,11 @@ const authlogin = (req, res) => {
       } else {
         const token = jwt.sign(
           { user_id: results[0].user_id },
-          process.env.JWT_SECRET
+          process.env.JWT_SECRET,
+          { expiresIn: 300 }
         );
-        res.cookie("Bearer", token, { maxAge: 900000 });
-        res.header("Authorization", `Bearer ${token}`).send({
-          signedToken,
-        });
 
-        return res.status(200).json(token);
+        return res.status(200).json({ token: token, result: result });
       }
     });
   });
